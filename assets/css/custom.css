@@ -2,6 +2,12 @@ h1, h2 {
     text-align: center;
 }
 
+.text-center{
+    text-align: center;
+    color:chocolate;
+
+}
+
 #contenido {
     margin-top: 40px;
 }

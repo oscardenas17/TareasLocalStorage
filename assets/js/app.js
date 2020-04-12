@@ -41,13 +41,42 @@ function agregarTarea(e){
     li.appendChild(botonBorrar);
     //*-Insertar la tarea en una lista
     listaTareas.appendChild(li);
-  
+
+
+    //Añadir al local storage
+   agregarTareaLocalStorage(tarea);
 }
 
+
+//eliminar tweet del DOM
 function borrarTarea(e){
     e.preventDefault();
     if(e.target.className === 'borrar-tarea'){
         console.log(e.target.parentElement.remove());
-        
+        alert('tarea Eliminada');
     }
+}
+
+//Agregar tarea al local storage
+function agregarTareaLocalStorage(tarea){
+    let tareas;
+    tareas= obtenerTareasLocalStorage();
+
+    //Añadir la nueva tarea en el arreglo
+    tareas.push(tarea);
+    //convertir de arreglo a String para local storage
+    localStorage.setItem('tareas',JSON.stringify(tareas));
+    //Agregar al local
+    //localStorage.setItem('tareas',tarea);
+}
+
+function obtenerTareasLocalStorage(){
+    let tareas;
+    //Revisar valores de local storage
+    if(localStorage.getItem('tareas') === null){
+        tareas = [];
+    }else{
+        tareas= JSON.parse(localStorage.getItem('tareas') );
+    }
+    return tareas;
 }

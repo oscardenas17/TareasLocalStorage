@@ -15,6 +15,9 @@ function eventListeners(){
     //*-Borrar tareas
     listaTareas.addEventListener('click', borrarTarea);
 
+    //*-Contenido cargado
+    document.addEventListener('DOMContentLoaded', localStorageListo);
+
 }
 
 //Functions
@@ -48,6 +51,31 @@ function agregarTarea(e){
 }
 
 
+//Mostrar datos de localStorage guardados 
+function localStorageListo(){
+    let tareas;
+
+    tareas = obtenerTareasLocalStorage();
+    console.log(tareas);
+
+     tareas.forEach(function(tarea){
+           //*--Crear boton de eliminar
+         const botonBorrar = document.createElement('a');
+         botonBorrar.classList = 'borrar-tarea';
+         botonBorrar.innerText = 'X';
+    
+    
+         //*--Crear elemento y añadir tarea en una lista
+         const li = document.createElement('li');
+         li.innerText= tarea;
+         //*--Boton borrar tarea
+         li.appendChild(botonBorrar);
+     //*-Insertar la tarea en una lista
+         listaTareas.appendChild(li);
+   });
+}
+
+
 //eliminar tweet del DOM
 function borrarTarea(e){
     e.preventDefault();
@@ -70,6 +98,8 @@ function agregarTareaLocalStorage(tarea){
     //localStorage.setItem('tareas',tarea);
 }
 
+
+//Comprobar si existen elementos en localstorage, retorna un arreglo
 function obtenerTareasLocalStorage(){
     let tareas;
     //Revisar valores de local storage
@@ -80,3 +110,5 @@ function obtenerTareasLocalStorage(){
     }
     return tareas;
 }
+
+

@@ -13,6 +13,12 @@ function eventListeners(){
     document.querySelector('#formulario').addEventListener('submit',agregarTarea);
     //*-Borrar tareas
     listaTareas.addEventListener('click', borrarTarea);
+
+
+    //
+    listaTareas.addEventListener('click', hechoTarea);
+
+
     //*-Contenido cargado
     document.addEventListener('DOMContentLoaded', localStorageListo);
 
@@ -31,11 +37,20 @@ function agregarTarea(e){
     botonBorrar.classList = 'borrar-tarea';
     botonBorrar.innerText = 'X';
 
+    //Boton Hecho
+    const botonHecho = document.createElement('a');
+    botonHecho.classList = 'hecho-tarea';
+    botonHecho.innerText = 'O';
+    
+
     //*--Crear elemento y añadir tarea en una lista
     const li = document.createElement('li');
     li.innerText= tarea;
     //*--Boton borrar tarea
     li.appendChild(botonBorrar);
+    //*Boton hecho
+    li.appendChild(botonHecho);
+
     //*-Insertar la tarea en una lista
     listaTareas.appendChild(li);
 
@@ -54,29 +69,47 @@ function localStorageListo(){
 
      tareas.forEach(function(tarea){
            //*--Crear boton de eliminar
-         const botonBorrar = document.createElement('a');
-         botonBorrar.classList = 'borrar-tarea';
-         botonBorrar.innerText = 'X';
+          //*--Crear boton de eliminar
+    const botonBorrar = document.createElement('a');
+    botonBorrar.classList = 'borrar-tarea';
+    botonBorrar.innerText = 'X';
+
+    //Boton Hecho
+    const botonHecho = document.createElement('a');
+    botonHecho.classList = 'hecho-tarea';
+    botonHecho.innerText = 'O';
     
-    
-         //*--Crear elemento y añadir tarea en una lista
-         const li = document.createElement('li');
-         li.innerText= tarea;
-         //*--Boton borrar tarea
-         li.appendChild(botonBorrar);
-     //*-Insertar la tarea en una lista
-         listaTareas.appendChild(li);
+
+    //*--Crear elemento y añadir tarea en una lista
+    const li = document.createElement('li');
+    li.innerText= tarea;
+    //*--Boton borrar tarea
+    li.appendChild(botonBorrar);
+    //*Boton hecho
+    li.appendChild(botonHecho);
+
+    //*-Insertar la tarea en una lista
+    listaTareas.appendChild(li);
    });
 }
 
 
-//eliminar tweet del DOM
+//eliminar tarea del DOM
 function borrarTarea(e){
     e.preventDefault();
     if(e.target.className === 'borrar-tarea'){
         e.target.parentElement.remove();
         borrarTareaLocalStorage(e.target.parentElement.innerText);
             
+    }
+}
+
+//Colorear hecho tarea del DOM
+function hechoTarea(e){
+    e.preventDefault();
+    if(e.target.className === 'hecho-tarea'){
+        e.target.parentElement.style.backgroundColor="greenyellow";
+                   
     }
 }
 
@@ -111,16 +144,17 @@ function obtenerTareasLocalStorage(){
 
 function borrarTareaLocalStorage(tarea){
     
-    let tareas, tareaBorrar;
+    let tareas, tareaBorrar2;
     
     //Elimina la X del texto
-    tareaBorrar = tarea.substring(0,tarea.length-1);
+    tareaBorrar = tarea.substring(0,tarea.length-2);
+    
 
     tareas=  obtenerTareasLocalStorage();
 
     tareas.forEach(function(tarea, index){
         if(tareaBorrar === tarea){
-            tareas.splice(index,1);
+            tareas.splice(index,2);
         }
     });
 

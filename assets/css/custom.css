@@ -18,3 +18,15 @@ h1, h2 {
     color: red;
     font-weight: bold;
 }
+
+
+.hecho-tarea,
+.hecho-tarea:hover{
+    float: right;
+    cursor: pointer;
+    color: greenyellow;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+

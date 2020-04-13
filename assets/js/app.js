@@ -11,23 +11,18 @@ eventListeners();
 function eventListeners(){
     //*--cuando se envian tareas en el form
     document.querySelector('#formulario').addEventListener('submit',agregarTarea);
-
     //*-Borrar tareas
     listaTareas.addEventListener('click', borrarTarea);
-
     //*-Contenido cargado
     document.addEventListener('DOMContentLoaded', localStorageListo);
 
 }
 
 //Functions
-
-
 //*--Añadir tarea del formulario
 function agregarTarea(e){
     e.preventDefault();
     //console.log('enviado')
-
     //Leer el valor del text area
     const tarea = document.getElementById('tarea').value;
     //console.log(tarea)
@@ -35,7 +30,6 @@ function agregarTarea(e){
     const botonBorrar = document.createElement('a');
     botonBorrar.classList = 'borrar-tarea';
     botonBorrar.innerText = 'X';
-
 
     //*--Crear elemento y añadir tarea en una lista
     const li = document.createElement('li');
@@ -80,8 +74,9 @@ function localStorageListo(){
 function borrarTarea(e){
     e.preventDefault();
     if(e.target.className === 'borrar-tarea'){
-        console.log(e.target.parentElement.remove());
-        alert('tarea Eliminada');
+        e.target.parentElement.remove();
+        borrarTareaLocalStorage(e.target.parentElement.innerText);
+            
     }
 }
 
@@ -109,6 +104,29 @@ function obtenerTareasLocalStorage(){
         tareas= JSON.parse(localStorage.getItem('tareas') );
     }
     return tareas;
+}
+
+
+//Eliminar Tarea de local storage
+
+function borrarTareaLocalStorage(tarea){
+    
+    let tareas, tareaBorrar;
+    
+    //Elimina la X del texto
+    tareaBorrar = tarea.substring(0,tarea.length-1);
+
+    tareas=  obtenerTareasLocalStorage();
+
+    tareas.forEach(function(tarea, index){
+        if(tareaBorrar === tarea){
+            tareas.splice(index,1);
+        }
+    });
+
+    localStorage.setItem('tareas',JSON.stringify(tareas) );
+
+
 }
 
 
